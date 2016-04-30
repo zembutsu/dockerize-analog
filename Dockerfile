@@ -1,9 +1,8 @@
-FROM ubuntu:14.04
+FROM alpine:3.3
 MAINTAINER Masahito Zembutsu <m.zembutsu@gmail.com> (@zembutsu)
 
 RUN mkdir -p /tmp/analog && \
-    apt-get update && \
-    apt-get install -y make gcc wget
+    apk --no-cache add make gcc g++
 
 RUN cd /tmp/analog && \
     wget -O analog-6.0.tar.gz ftp://ftp.naist.jp/pub/sunfreeware/SOURCES/analog-6.0.tar.gz && \
@@ -14,7 +13,8 @@ RUN cd /tmp/analog/analog-6.0 && \
     mkdir -p /opt/analog && \
     cp -r lang /opt/analog/ && \
     mv ./analog /usr/bin/analog && \
-    rm -rf /tmp/analog
+    rm -rf /tmp/analog && \
+    apk del make gcc g++
 
 COPY analog.cfg /opt/analog/analog.cfg
 
