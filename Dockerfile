@@ -2,13 +2,11 @@ FROM alpine:3.3
 MAINTAINER Masahito Zembutsu <m.zembutsu@gmail.com> (@zembutsu)
 
 RUN mkdir -p /tmp/analog && \
-    apk --no-cache add make gcc g++
-
-RUN cd /tmp/analog && \
+    apk --no-cache add make gcc g++ && \
+    cd /tmp/analog && \
     wget -O analog-6.0.tar.gz ftp://ftp.naist.jp/pub/sunfreeware/SOURCES/analog-6.0.tar.gz && \
-    tar xfz analog-6.0.tar.gz
-
-RUN cd /tmp/analog/analog-6.0 && \
+    tar xfz analog-6.0.tar.gz && \
+    cd /tmp/analog/analog-6.0 && \
     make DEFS='-DLANGDIR=\"/opt/analog/lang/\"' && \
     mkdir -p /opt/analog && \
     cp -r lang /opt/analog/ && \
